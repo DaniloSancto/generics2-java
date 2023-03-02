@@ -6,26 +6,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.Product;
 import services.CalculationService;
 
 public class Program {
 
 	public static void main(String[] args) {
 		
-		List<Integer> list = new ArrayList<>();
+		List<Product> list = new ArrayList<>();
 
 		String path = "C:\\workspace\\in.txt";
 		
 		try(BufferedReader br = new BufferedReader(new FileReader(path))) {
 			
-			String line = br.readLine();			
+			String line = br.readLine();
 			while(line != null) {
-				list.add(Integer.parseInt(line));
+				String[] fields = line.split(",");
+				String name = fields[0];
+				Double value = Double.parseDouble(fields[1]);
+				list.add(new Product(name, value));
 				line = br.readLine();
 			}
 			
-			Integer x = CalculationService.max(list);
-			System.out.println("Max: ");
+			Product x = CalculationService.max(list);
+			System.out.println("Most expensive: ");
 			System.out.println(x);
 		}
 		catch(IOException e) {
